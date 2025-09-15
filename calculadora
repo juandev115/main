@@ -1,0 +1,54 @@
+while True:
+    print("\n--- Calculadora de Sistemas Numéricos ---")
+    print("1. Decimal → Bin / Oct / Hex")
+    print("2. Binario → Decimal")
+    print("3. Octal → Decimal")
+    print("4. Hexadecimal → Decimal")
+    print("5. Complemento a 2 (desde decimal)")
+    print("6. Valor decimal desde complemento a 2")
+    print("0. Salir")
+
+    opcion = input("Opción: ")
+
+    if opcion == "1":
+        n = int(input("Número decimal: "))
+        print("Binario:", bin(n)[2:])
+        print("Octal:", oct(n)[2:])
+        print("Hexadecimal:", hex(n)[2:].upper())
+
+    elif opcion == "2":
+        b = input("Número binario: ")
+        decimal = int(b, 2)
+        print("Decimal:", decimal)
+
+    elif opcion == "3":
+        o = input("Número octal: ")
+        decimal = int(o, 8)
+        print("Decimal:", decimal)
+
+    elif opcion == "4":
+        h = input("Número hexadecimal: ")
+        decimal = int(h, 16)
+        print("Decimal:", decimal)
+
+    elif opcion == "5":
+        n = int(input("Número decimal (puede ser negativo): "))
+        bits = int(input("Cantidad de bits: "))
+        if n >= 0:
+            binario = format(n, f'0{bits}b')
+        else:
+            binario = format((1 << bits) + n, f'0{bits}b')
+        print("Complemento a 2:", binario)
+
+    elif opcion == "6":
+        b = input("Número binario en complemento a 2: ")
+        bits = len(b)
+        valor = int(b, 2)
+        if b[0] == '1':
+            valor -= (1 << bits)
+        print("Decimal con signo:", valor)
+
+    elif opcion == "0":
+        break
+    else:
+        print("Opción no válida.")
