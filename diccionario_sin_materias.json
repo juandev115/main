@@ -1,0 +1,142 @@
+{
+    "sedes": {
+        "Chiquinquira": {
+            "facultades": {
+                "Facultad de Ciencias Naturales e Ingeniería": {
+                    "programas": {
+                        "Ingeniería de Sistemas": {
+                            "materias": {}
+                        }
+                    }
+                },
+                "Facultad de Ciencias Jurídicas y Políticas": {
+                    "programas": {
+                        "Derecho": {
+                            "materias": {}
+                        }
+                    }
+                },
+                "Facultad de Ciencias Económicas y Administrativas": {
+                    "programas": {
+                        "Administración de Empresas": {
+                            "materias": {}
+                        },
+                        "Contaduría Pública": {
+                            "materias": {}
+                        },
+                        "Tecnología en Gestión de Empresas de Economía Solidaria": {
+                            "materias": {}
+
+                        }
+                    }
+                }
+            }
+        },
+        "Yopal": {
+            "facultades": {
+                "Facultad de Ciencias Económicas y Administrativas": {
+                    "programas": {
+                        "Administración de Empresas": {
+                            "materias": {}
+                        },
+                        "Contaduría Pública": {
+                            "materias": {}
+                        },
+                        "Tecnología en Gestión de Empresas de Economía Solidaria": {
+                            "materias": {}
+                        }
+                    }
+                },
+                "Facultad de Ciencias Naturales e Ingenierías": {
+                    "programas": {
+                        "Ingeniería de Sistemas": {
+                            "materias": {}
+                        },
+                        "Ingeniería Agrícola": {
+                            "materias": {}
+                        },
+                        "Ingeniería Electrónica": {
+                            "materias": {}
+                        },
+                        "Ingeniería Ambiental": {
+                            "materias": {}
+                        },
+                        "Ingeniería en Mantenimiento": {
+                            "materias": {}
+                        }
+                    }
+                },
+                "Facultad de Ciencias de la Educación y de la Salud": {
+                    "programas": {
+                        "Enfermería": {
+                            "materias": {}
+                        },
+                        "Psicología": {
+                            "materias": {}
+                        },
+                        "Licenciatura en Educación Infantil": {
+                            "materias": {}
+                        }
+                    }
+                },
+                "Facultad de Ciencias Jurídicas y Políticas": {
+                    "programas": {
+                        "Derecho": {
+                            "materias": {}
+                        }
+                    }
+                }
+            }
+        },
+        "San Gil": {
+            "facultades": {
+                "Facultad de Ciencias Económicas y Administrativas": {
+                    "programas": {
+                        "Administración de Empresas": {
+                            "materias": {}
+                        },
+                        "Contaduría Pública": {
+                            "materias": {}
+                        },
+                        "Tecnología en Gestión de Empresas de Economía Solidaria - VIRTUAL": {
+                            "materias": {}
+                        }
+                    }
+                },
+                "Facultad de Ciencias Naturales e Ingenierías": {
+                    "programas": {
+                        "Ingeniería de Sistemas": {
+                            "materias": {}
+                        },
+                        "Ingeniería de Mantenimiento": {
+                            "materias": {}
+                        },
+                        "Ingeniería Ambiental": {
+                            "materias": {}
+                        }
+                    }
+                },
+                "Facultad de Ciencias de la Educación y de la Salud": {
+                    "programas": {
+                        "Enfermería": {
+                            "materias": {}
+                        },
+                        "Psicología": {
+                            "materias": {}
+                        },
+                        "Licenciatura en Educación Infantil": {
+                            "materias": {}
+                        }
+                    }
+                },
+                "Facultad de Ciencias Jurídicas y Políticas": {
+                    "programas": {
+                        "Derecho": {
+                            "materias": {}
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
