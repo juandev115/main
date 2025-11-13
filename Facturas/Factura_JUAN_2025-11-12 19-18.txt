@@ -1,0 +1,17 @@
+===================================
+        ElectroMundo S.A.
+          NIT: 900123456-7
+       FACTURA ELECTRÓNICA
+===================================
+Cliente: JUAN
+Fecha: 2025-11-12 19-18
+
+Detalle de productos:
+LB001 - Refrigerador x3 = $9,600,000
+
+-----------------------------------
+Subtotal: $9,600,000
+IVA (19%): $1,824,000
+TOTAL: $11,424,000
+===================================
+¡Gracias por su compra en ElectroMundo S.A.! 💡

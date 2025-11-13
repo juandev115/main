@@ -1,0 +1,13 @@
+Factura - ElectroMundo S.A.
+NIT: 900123456-7
+Cliente: juan armando castillo
+Fecha: 2025-11-12 12:22
+
+Productos:
+LB001 - Refrigerador x1 = $3,200,000
+PE003 - Tostadora x1 = $250,000
+
+-----------------------------------
+Subtotal: $3,450,000
+IVA (19%): $655,500
+TOTAL: $4,105,500

@@ -1,0 +1,14 @@
+#diccionario
+{"enero":{"dias":31},
+        "febrero":{"dias":29},
+        "marzo":{"dias":31},
+        "abril":{"dias":30},
+        "mayo":{"dias":31},
+        "junio":{"dias":30},
+        "julio":{"dias":31},
+        "agosto":{"dias":31},
+        "septiembre":{"dias":30},
+        "octubre":{"dias":31},
+        "noviembre":{"dias":30},
+        "diciembre":{"dias":31}}
+print(["febrero"]["dias"])

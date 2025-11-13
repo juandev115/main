@@ -1,0 +1,18 @@
+===================================
+        ElectroMundo S.A.
+          NIT: 900123456-7
+       FACTURA ELECTRÓNICA
+===================================
+Cliente: JUAN2
+Fecha: 2025-11-12 19-19
+
+Detalle de productos:
+LB001 - Refrigerador x3 = $9,600,000
+EN001 - Televisor x4 = $16,800,000
+
+-----------------------------------
+Subtotal: $26,400,000
+IVA (19%): $5,016,000
+TOTAL: $31,416,000
+===================================
+¡Gracias por su compra en ElectroMundo S.A.! 💡

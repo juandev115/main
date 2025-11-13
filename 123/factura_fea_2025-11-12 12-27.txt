@@ -1,0 +1,12 @@
+Factura - ElectroMundo S.A.
+NIT: 900123456-7
+Cliente: fea
+Fecha: 2025-11-12 12:27
+
+Productos:
+LB001 - Refrigerador x1 = $3,200,000
+
+-----------------------------------
+Subtotal: $3,200,000
+IVA (19%): $608,000
+TOTAL: $3,808,000

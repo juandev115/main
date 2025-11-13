@@ -25,8 +25,7 @@ def solicitud_datos():
     """
     num1 = int(input("Ingrese su información x: "))
     num2 = int(input("Ingrese su otra info x: "))
-    return num1, num2
-
+    return num1, num2 
 def multiplicacion(num1, num2):
     """
     función para multiplicación de 2 números

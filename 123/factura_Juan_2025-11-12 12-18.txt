@@ -1,0 +1,13 @@
+Factura - ElectroMundo S.A.
+NIT: 900123456-7
+Cliente: Juan
+Fecha: 2025-11-12 12:18
+
+Productos:
+LB001 - Refrigerador x2 = $6,400,000
+LB002 - Lavadora x3 = $8,400,000
+
+-----------------------------------
+Subtotal: $14,800,000
+IVA (19%): $2,812,000
+TOTAL: $17,612,000
