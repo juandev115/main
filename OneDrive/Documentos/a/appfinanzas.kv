@@ -1,0 +1,96 @@
+<FinanzasScreen>:
+    MDBoxLayout:
+        orientation: 'vertical'
+
+        MDTopAppBar:
+            title: "Control de Finanzas Pro"
+            right_action_items: [["theme-light-dark", lambda x: app.cambiar_tema()], ["chart-bar", lambda x: root.abrir_resumen()]]
+
+        MDBoxLayout:
+            orientation: 'vertical'
+            padding: dp(15)
+            spacing: dp(10)
+
+            MDBoxLayout:
+                size_hint_y: None
+                height: dp(50)
+                spacing: dp(10)
+
+                MDRaisedButton:
+                    text: "+ Nueva"
+                    md_bg_color: 0.2, 0.6, 0.9, 1
+                    on_release: root.dialogo_nueva_billetera()
+
+                MDRaisedButton:
+                    text: "Eliminar"
+                    md_bg_color: 0.8, 0.3, 0.3, 1
+                    on_release: root.eliminar_billetera()
+
+            MDLabel:
+                id: lbl_cuenta_actual
+                text: "Selecciona una cuenta"
+                font_style: "H6"
+                size_hint_y: None
+                height: dp(30)
+
+            MDLabel:
+                id: lbl_saldo
+                text: "$ 0.00"
+                font_style: "H3"
+                theme_text_color: "Custom"
+                text_color: 0.2, 0.6, 0.9, 1
+                size_hint_y: None
+                height: dp(50)
+
+            MDBoxLayout:
+                size_hint_y: None
+                height: dp(60)
+                spacing: dp(10)
+
+                MDTextField:
+                    id: txt_monto
+                    hint_text: "Monto $"
+                    input_filter: 'float'
+
+                MDTextField:
+                    id: txt_desc
+                    hint_text: "Descripción"
+
+            MDBoxLayout:
+                size_hint_y: None
+                height: dp(50)
+                spacing: dp(10)
+
+                MDRaisedButton:
+                    text: "Ingreso"
+                    md_bg_color: 0.15, 0.68, 0.38, 1
+                    size_hint_x: 0.5
+                    on_release: root.transaccion("Ingreso")
+
+                MDRaisedButton:
+                    text: "Gasto"
+                    md_bg_color: 0.75, 0.22, 0.17, 1
+                    size_hint_x: 0.5
+                    on_release: root.transaccion("Gasto")
+
+            MDLabel:
+                text: "Mis Cuentas"
+                font_style: "Subtitle1"
+                size_hint_y: None
+                height: dp(25)
+
+            ScrollView:
+                size_hint_y: 0.25
+                MDList:
+                    id: lista_billeteras
+
+            MDLabel:
+                text: "Historial de Movimientos"
+                font_style: "Subtitle1"
+                size_hint_y: None
+                height: dp(25)
+
+            ScrollView:
+                size_hint_y: 0.4
+                MDList:
+                    id: lista_historial
