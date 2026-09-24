@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="es" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Finanzas Pro</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        ctk: {
+                            lightBg: '#f3f4f6',
+                            lightCard: '#ffffff',
+                            darkBg: '#1a1a1a',
+                            darkCard: '#242424',
+                            sidebarLight: '#e5e7eb',
+                            sidebarDark: '#121212',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.5);
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(156, 163, 175, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-[#121212] text-gray-800 dark:text-gray-100 font-sans min-h-screen flex flex-col transition-colors duration-200">
+
+    <!-- Mobile Navigation Bar -->
+    <header class="md:hidden flex items-center justify-between px-4 py-3 bg-white dark:bg-[#1a1a1a] border-b border-gray-200 dark:border-gray-800 sticky top-0 z-30 shadow-sm">
+        <div class="flex items-center space-x-2">
+            <button id="mobile-menu-btn" class="p-2 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 focus:outline-none">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+            <span class="font-bold text-lg tracking-tight">Finanzas Pro</span>
+        </div>
+        <div class="flex items-center space-x-2">
+            <button onclick="toggleDarkMode()" class="p-2 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200">
+                <i data-lucide="moon" class="w-5 h-5 hidden dark:block"></i>
+                <i data-lucide="sun" class="w-5 h-5 block dark:hidden"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="flex flex-1 relative overflow-hidden">
+        
+        <!-- Backdrop for mobile sidebar -->
+        <div id="sidebar-backdrop" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden transition-opacity"></div>
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-white dark:bg-[#1a1a1a] border-r border-gray-200 dark:border-gray-800 flex flex-col transform -translate-x-full md:translate-x-0 md:static transition-transform duration-300 shadow-xl md:shadow-none">
+            <div class="p-6 pb-2 flex items-center justify-between">
+                <h2 class="text-xl font-extrabold tracking-wide uppercase">Billeteras</h2>
+                <button id="close-sidebar" class="md:hidden p-1 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="px-5 py-3 space-y-2.5">
+                <button onclick="abrirResumen()" class="w-full flex items-center justify-center space-x-2 bg-[#f1c40f] hover:bg-[#d4ac0d] text-gray-900 font-bold py-3 px-4 rounded-xl shadow-md transition transform active:scale-98">
+                    <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+                    <span>Resumen General</span>
+                </button>
+
+                <button onclick="dialogoNuevaBilletera()" class="w-full flex items-center justify-center space-x-2 bg-[#3498db] hover:bg-[#2980b9] text-white font-bold py-3 px-4 rounded-xl shadow-md transition transform active:scale-98">
+                    <i data-lucide="plus-circle" class="w-5 h-5"></i>
+                    <span>Nueva Billetera</span>
+                </button>
+
+                <button onclick="eliminarBilleteraActual()" class="w-full flex items-center justify-center space-x-2 bg-[#5d6d7e] hover:bg-[#34495e] text-white font-medium py-2.5 px-4 rounded-xl transition">
+                    <i data-lucide="trash-2" class="w-5 h-5"></i>
+                    <span>Eliminar Actual</span>
+                </button>
+            </div>
+
+            <!-- Wallets Scrollable List -->
+            <div class="flex-1 overflow-y-auto px-5 py-2 space-y-3" id="wallet-list-container">
+                <!-- Javascript will inject wallet buttons here -->
+            </div>
+
+            <!-- Theme Switcher Footer -->
+            <div class="p-5 border-t border-gray-200 dark:border-gray-800 flex items-center justify-between">
+                <span id="theme-label" class="text-sm font-semibold">Modo Claro</span>
+                <button onclick="toggleDarkMode()" class="relative inline-flex h-7 w-14 items-center rounded-full bg-gray-300 dark:bg-blue-600 transition-colors focus:outline-none">
+                    <span id="theme-switch-thumb" class="inline-block h-5 w-5 transform rounded-full bg-white transition-transform translate-x-1 dark:translate-x-8 shadow-md"></span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col p-4 sm:p-6 md:p-10 max-w-5xl mx-auto w-full overflow-y-auto">
+            
+            <!-- Header Section -->
+            <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <h1 id="lbl-selected-wallet" class="text-2xl sm:text-3xl font-black tracking-tight">Selecciona una cuenta</h1>
+                    <div id="lbl-saldo" class="text-4xl sm:text-5xl font-extrabold text-[#3498db] mt-2">$ 0.00</div>
+                </div>
+            </div>
+
+            <!-- Transaction Form Card -->
+            <div class="bg-white dark:bg-[#1a1a1a] rounded-2xl p-5 sm:p-6 shadow-md border border-gray-200/80 dark:border-gray-800 mb-8">
+                <h3 class="text-sm font-bold uppercase tracking-wider text-gray-400 mb-4">Nuevo Movimiento</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-gray-500 mb-1">Monto ($)</label>
+                        <input type="number" step="any" id="entry-monto" placeholder="0.00" class="w-full bg-gray-50 dark:bg-[#121212] border border-gray-300 dark:border-gray-700 rounded-xl px-4 py-3.5 text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-gray-500 mb-1">Descripción</label>
+                        <input type="text" id="entry-desc" placeholder="Ej. Supermercado, Salario..." class="w-full bg-gray-50 dark:bg-[#121212] border border-gray-300 dark:border-gray-700 rounded-xl px-4 py-3.5 text-base focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <button onclick="registrarTransaccion('Ingreso')" class="flex items-center justify-center space-x-2 bg-[#27ae60] hover:bg-[#2ecc71] text-white font-bold py-3.5 px-4 rounded-xl shadow-md transition transform active:scale-98">
+                        <i data-lucide="arrow-up-circle" class="w-5 h-5"></i>
+                        <span>Ingreso</span>
+                    </button>
+                    <button onclick="registrarTransaccion('Gasto')" class="flex items-center justify-center space-x-2 bg-[#c0392b] hover:bg-[#e74c3c] text-white font-bold py-3.5 px-4 rounded-xl shadow-md transition transform active:scale-98">
+                        <i data-lucide="arrow-down-circle" class="w-5 h-5"></i>
+                        <span>Gasto</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- History Section -->
+            <div class="flex-1 flex flex-col bg-white dark:bg-[#1a1a1a] rounded-2xl p-5 sm:p-6 shadow-md border border-gray-200/80 dark:border-gray-800 min-h-[350px]">
+                <h3 class="text-sm font-bold uppercase tracking-wider text-gray-400 mb-4 flex items-center justify-between">
+                    <span>Historial de Movimientos</span>
+                    <span id="history-count" class="text-xs bg-gray-100 dark:bg-gray-800 px-2.5 py-1 rounded-full text-gray-500">0 registros</span>
+                </h3>
+                <div id="historial-container" class="flex-1 space-y-3 overflow-y-auto max-h-[450px] pr-1">
+                    <!-- Dynamic history items -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Resumen Consolidado Modal -->
+    <div id="modal-resumen" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs hidden p-4">
+        <div class="bg-white dark:bg-[#1a1a1a] rounded-3xl w-full max-w-lg shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden transform transition-all flex flex-col max-h-[85vh]">
+            <div class="p-6 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
+                <h3 class="text-xl font-black">Resumen Consolidado</h3>
+                <button onclick="cerrarResumen()" class="p-2 rounded-xl text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto flex-1 space-y-4">
+                <p class="text-sm text-gray-500 dark:text-gray-400">Selecciona las cuentas que deseas sumar para obtener un total personalizado:</p>
+                <div id="resumen-checks-container" class="space-y-3">
+                    <!-- Checkboxes injected dynamically -->
+                </div>
+            </div>
+            <div class="p-6 bg-gray-50 dark:bg-[#202020] border-t border-gray-200 dark:border-gray-800 flex flex-col items-center justify-center">
+                <span class="text-xs uppercase font-bold tracking-wider text-gray-400 mb-1">Total Seleccionado</span>
+                <div id="resumen-total" class="text-3xl sm:text-4xl font-black text-[#2ecc71]">$ 0.00</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Logic -->
+    <script>
+        // LocalStorage DB Initialization
+        const DB_KEY = "finanzas_pro_db_v1";
+
+        function getDB() {
+            let db = localStorage.getItem(DB_KEY);
+            if (!db) {
+                const initialData = {
+                    billeteras: [
+                        { id: 1, nombre: "Principal", saldo: 0.0 }
+                    ],
+                    movimientos: []
+                };
+                localStorage.setItem(DB_KEY, JSON.stringify(initialData));
+                return initialData;
+            }
+            return JSON.parse(db);
+        }
+
+        function saveDB(db) {
+            localStorage.setItem(DB_KEY, JSON.stringify(db));
+        }
+
+        let currentWalletId = 1;
+
+        // Initialize App on Load
+        window.addEventListener('DOMContentLoaded', () => {
+            const db = getDB();
+            if (db.billeteras.length > 0) {
+                currentWalletId = db.billeteras[0].id;
+            }
+            actualizarListaBilleteras();
+            cargarVistaBilleteraActual();
+            lucide.createIcons();
+
+            // Mobile menu listeners
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebar-backdrop');
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const closeBtn = document.getElementById('close-sidebar');
+
+            function toggleSidebar(open) {
+                if (open) {
+                    sidebar.classList.remove('-translate-x-full');
+                    backdrop.classList.remove('hidden');
+                } else {
+                    sidebar.classList.add('-translate-x-full');
+                    backdrop.classList.add('hidden');
+                }
+            }
+
+            menuBtn.addEventListener('click', () => toggleSidebar(true));
+            closeBtn.addEventListener('click', () => toggleSidebar(false));
+            backdrop.addEventListener('click', () => toggleSidebar(false));
+        });
+
+        // Toggle Dark / Light Theme
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const isDark = html.classList.contains('dark');
+            if (isDark) {
+                html.classList.remove('dark');
+                document.getElementById('theme-label').innerText = "Modo Claro";
+            } else {
+                html.classList.add('dark');
+                document.getElementById('theme-label').innerText = "Modo Oscuro";
+            }
+            lucide.createIcons();
+        }
+
+        // Update Wallets List UI
+        function actualizarListaBilleteras() {
+            const db = getDB();
+            const container = document.getElementById('wallet-list-container');
+            container.innerHTML = '';
+
+            db.billeteras.forEach(w => {
+                const isSelected = w.id === currentWalletId;
+                const btn = document.createElement('button');
+                btn.className = `w-full text-left p-4 rounded-2xl transition flex flex-col justify-between border ${
+                    isSelected 
+                        ? 'bg-[#d68910]/10 border-[#d68910] text-[#d68910] font-bold shadow-sm' 
+                        : 'bg-gray-50 dark:bg-[#202020] border-transparent hover:bg-gray-100 dark:hover:bg-gray-200/50'
+                }`;
+                btn.onclick = () => {
+                    currentWalletId = w.id;
+                    actualizarListaBilleteras();
+                    cargarVistaBilleteraActual();
+                    // Close sidebar on mobile when selecting
+                    if (window.innerWidth < 768) {
+                        document.getElementById('sidebar').classList.add('-translate-x-full');
+                        document.getElementById('sidebar-backdrop').classList.add('hidden');
+                    }
+                };
+
+                btn.innerHTML = `
+                    <div class="text-sm uppercase font-extrabold tracking-wide mb-1 flex items-center justify-between">
+                        <span>${escapeHtml(w.nombre)}</span>
+                        ${isSelected ? '<span class="w-2 h-2 rounded-full bg-[#d68910]"></span>' : ''}
+                    </div>
+                    <div class="text-lg font-black">$ ${w.saldo.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
+                `;
+                container.appendChild(btn);
+            });
+            lucide.createIcons();
+        }
+
+        function cargarVistaBilleteraActual() {
+            const db = getDB();
+            const wallet = db.billeteras.find(w => w.id === currentWalletId);
+            
+            if (!wallet) {
+                if (db.billeteras.length > 0) {
+                    currentWalletId = db.billeteras[0].id;
+                    cargarVistaBilleteraActual();
+                } else {
+                    currentWalletId = null;
+                    document.getElementById('lbl-selected-wallet').innerText = "Sin cuentas";
+                    document.getElementById('lbl-saldo').innerText = "$ 0.00";
+                    document.getElementById('historial-container').innerHTML = '<p class="text-center text-gray-400 py-8">No hay billeteras creadas.</p>';
+                }
+                return;
+            }
+
+            document.getElementById('lbl-selected-wallet').innerText = `Cuenta: ${wallet.nombre}`;
+            document.getElementById('lbl-saldo').innerText = `$ ${wallet.saldo.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            
+            renderHistorial();
+        }
+
+        function renderHistorial() {
+            const db = getDB();
+            const movimientos = db.movimientos
+                .filter(m => m.billetera_id === currentWalletId)
+                .sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+
+            const container = document.getElementById('historial-container');
+            document.getElementById('history-count').innerText = `${movimientos.length} registros`;
+            container.innerHTML = '';
+
+            if (movimientos.length === 0) {
+                container.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-12 text-gray-400 space-y-2">
+                        <i data-lucide="receipt" class="w-10 h-10 stroke-1"></i>
+                        <p class="text-sm">No hay movimientos registrados en esta cuenta</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            movimientos.forEach(m => {
+                const isIngreso = m.tipo === 'Ingreso';
+                const item = document.createElement('div');
+                item.className = "flex items-center justify-between p-3.5 rounded-xl bg-gray-50 dark:bg-[#121212] border border-gray-100 dark:border-gray-800/60";
+                
+                item.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <div class="p-2.5 rounded-xl ${isIngreso ? 'bg-emerald-500/10 text-[#2ecc71]' : 'bg-rose-500/10 text-[#e74c3c]'}">
+                            <i data-lucide="${isIngreso ? 'arrow-up-right' : 'arrow-down-right'}" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-sm">${escapeHtml(m.descripcion)}</div>
+                            <div class="text-xs text-gray-400">${formatFecha(m.fecha)}</div>
+                        </div>
+                    </div>
+                    <div class="text-right font-extrabold text-base ${isIngreso ? 'text-[#2ecc71]' : 'text-[#e74c3c]'}">
+                        ${isIngreso ? '+' : '-'}$ ${m.monto.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+            lucide.createIcons();
+        }
+
+        // New Wallet Dialog Custom Prompt
+        function dialogoNuevaBilletera() {
+            const nombre = prompt("Ingresa el nombre de la nueva cuenta:");
+            if (nombre && nombre.trim() !== "") {
+                const db = getDB();
+                const exists = db.billeteras.some(w => w.nombre.toLowerCase() === nombre.trim().toLowerCase());
+                if (exists) {
+                    alertCustom("Ya existe una billetera con ese nombre.");
+                    return;
+                }
+                const newId = db.billeteras.length > 0 ? Math.max(...db.billeteras.map(w => w.id)) + 1 : 1;
+                db.billeteras.push({ id: newId, nombre: nombre.trim(), saldo: 0.0 });
+                saveDB(db);
+                currentWalletId = newId;
+                actualizarListaBilleteras();
+                cargarVistaBilleteraActual();
+            }
+        }
+
+        // Delete Wallet
+        function eliminarBilleteraActual() {
+            if (currentWalletId === null) return;
+            const db = getDB();
+            if (db.billeteras.length <= 1) {
+                alertCustom("Debes mantener al menos una billetera.");
+                return;
+            }
+            if (confirm("¿Estás seguro de eliminar esta billetera y todos sus movimientos?")) {
+                db.billeteras = db.billeteras.filter(w => w.id !== currentWalletId);
+                db.movimientos = db.movimientos.filter(m => m.billetera_id !== currentWalletId);
+                saveDB(db);
+                currentWalletId = db.billeteras[0].id;
+                actualizarListaBilleteras();
+                cargarVistaBilleteraActual();
+            }
+        }
+
+        // Register Transaction
+        function registrarTransaccion(tipo) {
+            if (currentWalletId === null) {
+                alertCustom("Selecciona una billetera primero.");
+                return;
+            }
+            const inputMonto = document.getElementById('entry-monto');
+            const inputDesc = document.getElementById('entry-desc');
+
+            const montoVal = parseFloat(inputMonto.value.replace(',', '.'));
+            if (isNaN(montoVal) || montoVal <= 0) {
+                alertCustom("Por favor ingresa un monto válido.");
+                return;
+            }
+
+            const descVal = inputDesc.value.trim() !== "" ? inputDesc.value.trim() : "Sin descripción";
+
+            const db = getDB();
+            const wallet = db.billeteras.find(w => w.id === currentWalletId);
+            if (!wallet) return;
+
+            // Update balance
+            if (tipo === 'Ingreso') {
+                wallet.saldo += montoVal;
+            } else {
+                wallet.saldo -= montoVal;
+            }
+
+            // Push movement
+            db.movimientos.push({
+                billetera_id: currentWalletId,
+                tipo: tipo,
+                monto: montoVal,
+                descripcion: descVal,
+                fecha: new Date().toISOString()
+            });
+
+            saveDB(db);
+
+            // Reset inputs
+            inputMonto.value = '';
+            inputDesc.value = '';
+
+            actualizarListaBilleteras();
+            cargarVistaBilleteraActual();
+        }
+
+        // Modal Resumen Consolidado
+        let resumenCheckStates = {};
+
+        function abrirResumen() {
+            const db = getDB();
+            const container = document.getElementById('resumen-checks-container');
+            container.innerHTML = '';
+            resumenCheckStates = {};
+
+            db.billeteras.forEach(w => {
+                resumenCheckStates[w.id] = true;
+                const wrapper = document.label = document.createElement('label');
+                wrapper.className = "flex items-center justify-between p-3.5 rounded-xl bg-gray-50 dark:bg-[#121212] border border-gray-200/60 dark:border-gray-800 cursor-pointer hover:border-blue-500 transition";
+                wrapper.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" checked data-wallet-id="${w.id}" onchange="calcularTotalResumen()" class="w-5 h-5 accent-blue-600 rounded cursor-pointer">
+                        <span class="font-bold text-sm">${escapeHtml(w.nombre)}</span>
+                    </div>
+                    <span class="font-extrabold text-sm text-gray-600 dark:text-gray-300">$ ${w.saldo.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
+                `;
+                container.appendChild(wrapper);
+            });
+
+            calcularTotalResumen();
+            document.getElementById('modal-resumen').classList.remove('hidden');
+        }
+
+        function cerrarResumen() {
+            document.getElementById('modal-resumen').classList.add('hidden');
+        }
+
+        function calcularTotalResumen() {
+            const db = getDB();
+            const checkboxes = document.querySelectorAll('#resumen-checks-container input[type="checkbox"]');
+            let total = 0;
+
+            checkboxes.value = checkboxes.forEach(cb => {
+                const id = parseInt(cb.getAttribute('data-wallet-id'));
+                if (cb.checked) {
+                    const w = db.billeteras.find(item => item.id === id);
+                    if (w) total += w.saldo;
+                }
+            });
+
+            document.getElementById('resumen-total').innerText = `$ ${total.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+        }
+
+        // Safe helper utilities
+        function escapeHtml(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+
+        function formatFecha(isoStr) {
+            const d = new Date(isoStr);
+            return d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function alertCustom(msg) {
+            alert(msg);
+        }
+    </script>
+</body>
+</html>
